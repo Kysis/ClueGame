@@ -22,12 +22,16 @@ public class Board {
 	private Set<BoardCell> targets;
 	private int gridPieces;
 	private boolean[] visited;
+	private ArrayList<ComputerPlayer> computers;
+	private HumanPlayer human;
+	private ArrayList<Card> cards;
+	private String currentPlayer;
+	
 	public Board(String legendFile,String configFile) {
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		loadConfigFiles(legendFile,configFile);
 		gridPieces = numRows*numCols;
-		
 		calcAdjacencies();
 	}
 	public void loadConfigFiles(String legendFile,String configFile) {
@@ -188,7 +192,8 @@ public class Board {
 			adjacencies.put(i, adjList);
 		}
 	}
-	public Set<BoardCell> f( int start, int steps,boolean begin) {
+	
+	public Set<BoardCell> recurseTargets( int start, int steps,boolean begin) {
 		Set<BoardCell> tempList = new HashSet<BoardCell>();
 		visited[start] = true;
 		if(steps == 0 || (getCellAt(start).isDoorway() && !begin)){
@@ -196,7 +201,7 @@ public class Board {
 		}else{
 			for(int adj : adjacencies.get(start)){
 				if(!visited[adj]){
-					tempList.addAll(f(adj,steps-1,false));
+					tempList.addAll(recurseTargets(adj,steps-1,false));
 					visited[adj] = false;
 				}
 			}
@@ -207,7 +212,7 @@ public class Board {
 	public void calcTargets (int start, int steps) {
 		targets=new HashSet<BoardCell>();
 		visited = new boolean[gridPieces];
-		targets=f(start,steps,true);
+		targets=recurseTargets(start,steps,true);
 	}
 	
 	public Set<BoardCell> getTargets() {
