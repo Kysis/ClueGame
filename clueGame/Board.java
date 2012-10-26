@@ -24,17 +24,29 @@ public class Board {
 	private boolean[] visited;
 	private ArrayList<ComputerPlayer> computers;
 	private HumanPlayer human;
-	private ArrayList<Card> cards;
+	private ArrayList<Card> deck;
 	private String currentPlayer;
 	
-	public Board(String legendFile,String configFile) {
+	public Player getComputer(int index){
+		return computers.get(index);
+	}
+	
+	public Player getHuman(){
+		return human;
+	}
+	
+	public ArrayList<Card> getDeck(){
+		return deck;
+	}
+	
+	public Board(String legendFile, String configFile, String playerFile, String cardFile) {
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		loadConfigFiles(legendFile,configFile);
 		gridPieces = numRows*numCols;
 		calcAdjacencies();
 	}
-	public void loadConfigFiles(String legendFile,String configFile) {
+	public void loadConfigFiles(String legendFile, String configFile) {
 		try{
 			loadLegend(legendFile);
 			loadBoard(configFile);

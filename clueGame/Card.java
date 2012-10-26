@@ -5,6 +5,10 @@ public class Card {
 	private Type type;
 	public enum Type {PERSON, WEAPON, ROOM};
 	
+	public Card(String name, String cardType){
+		
+	}
+	
 	public String getName() {
 		return name;
 	}

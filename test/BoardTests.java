@@ -26,7 +26,7 @@ public class BoardTests {
 	
 	@BeforeClass
 	public static void setUp() {
-		board = new Board("Legend","BoardLayout.csv");
+		board = new Board("Legend","BoardLayout.csv", "Cards", "Players");
 	}
 	@Test
 	public void testRooms() {
