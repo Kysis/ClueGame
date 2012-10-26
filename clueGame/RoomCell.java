@@ -58,8 +58,8 @@ public class RoomCell extends BoardCell {
 		if(o==null) return false;
 		if(o==this) return true;
 		if(o instanceof RoomCell) {
-			RoomCell banana = (RoomCell)o;
-			if(banana.col==this.col && banana.row==this.row) {
+			RoomCell roomWrap = (RoomCell)o;
+			if(roomWrap.col==this.col && roomWrap.row==this.row) {
 				return true;
 			}
 		}
