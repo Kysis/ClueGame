@@ -1,11 +1,17 @@
 package clueGame;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Player {
-	String name;
-	String color;
-	int row, col;
+	private String name;
+	private String color;
+	private int row, col;
+	private ArrayList<Card> cards;
+	
+	public void makeAccusation(Card weapon, Card person, Card room){
+		
+	}
 	
 	public String getName() {
 		return name;
@@ -39,13 +45,13 @@ public class Player {
 		this.col = col;
 	}
 
-	public LinkedList<Card> getCards() {
+	public ArrayList<Card> getCards() {
 		return cards;
 	}
 
-	public void setCards(LinkedList<Card> cards) {
+	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
 	}
 
-	LinkedList<Card> cards;
+	
 }

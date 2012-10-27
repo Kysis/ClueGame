@@ -26,9 +26,22 @@ public class Board {
 	private HumanPlayer human;
 	private ArrayList<Card> deck;
 	private String currentPlayer;
+	private ArrayList<Card> accusation;
 	
+	public ArrayList<Card> getAccusation(){
+		return this.accusation;
+	}
+	
+	public void setAccusation(ArrayList<Card> accusation) {
+		this.accusation = accusation;
+	}
+
 	public Player getComputer(int index){
 		return computers.get(index);
+	}
+	
+	public ArrayList<ComputerPlayer> getComputers(){
+		return this.computers;
 	}
 	
 	public Player getHuman(){
