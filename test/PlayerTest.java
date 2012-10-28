@@ -11,6 +11,7 @@ import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
 import clueGame.ComputerPlayer;
+import clueGame.HumanPlayer;
 import clueGame.Player;
 
 public class PlayerTest {
@@ -24,6 +25,9 @@ public class PlayerTest {
 	private static Card weapon3;
 	private static Card room3;
 	private static Card person3;
+	private static Card weapon4;
+	private static Card room4;
+	private static Card person4;
 	private static ArrayList<Card> answer;
 	
 	@BeforeClass
@@ -38,6 +42,9 @@ public class PlayerTest {
 		weapon3 = new Card("Kinfe", "weapon");
 		room3 = new Card("Bedroom", "room");
 		person3 = new Card("Professor Plum", "person");
+		weapon4 = new Card("Bat", "weapon");
+		room4 = new Card("Bathroom", "room");
+		person4 = new Card("Captain Kirk", "person");
 		answer = new ArrayList<Card>();
 		answer.add(weapon);
 		answer.add(person);
@@ -124,6 +131,9 @@ public class PlayerTest {
 		Player temp = new Player();
 		Card tempCard;
 		ArrayList<Card> hand = new ArrayList<Card> ();
+		//Set up the players
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(board.getHuman());
 		//Deal the hand
 		hand.add(person);
 		hand.add(person2);
@@ -135,7 +145,7 @@ public class PlayerTest {
 		int num_person = 0;
 		int num_room = 0;
 		for (int i=0; i<100; i++){
-			tempCard=temp.disproveSuggestion(weapon, person, room);
+			tempCard=temp.disproveSuggestion(players, weapon, person, room);
 			if (tempCard==weapon){
 				num_weapon++;
 			} else if (tempCard==person){
@@ -149,5 +159,46 @@ public class PlayerTest {
 		assertTrue(num_weapon>0 && num_person>0 && num_room>0);
 	}
 	
-	
+	@Test
+	public void testAllPlayersAsked(){
+		HumanPlayer temp = new HumanPlayer();
+		ComputerPlayer c1 = new ComputerPlayer();
+		ComputerPlayer c2 = new ComputerPlayer();
+		ArrayList<Player> players = new ArrayList<Player> ();
+		players.add(temp);
+		players.add(c1);
+		players.add(c2);
+		ArrayList<Card> playerHand = new ArrayList<Card>();
+		ArrayList<Card> c1Hand = new ArrayList<Card>();
+		ArrayList<Card> c2Hand = new ArrayList<Card>();
+		playerHand.add(person);
+		playerHand.add(weapon);
+		playerHand.add(room);
+		c1Hand.add(person2);
+		c1Hand.add(weapon2);
+		c1Hand.add(room2);
+		c2Hand.add(person3);
+		c2Hand.add(weapon3);
+		c2Hand.add(room3);
+		Card tempSuggestion;
+		for (int i=0; i<players.size(); i++){
+			tempSuggestion=temp.disproveSuggestion(players, weapon, person, room);
+			assertTrue(tempSuggestion==weapon || tempSuggestion==person || tempSuggestion==room);
+		}
+		int num_c2=0;
+		int num_c1=0;
+		for (int i=0; i<100; i++){
+			for (int j=0; j<players.size(); j++){
+				tempSuggestion=temp.disproveSuggestion(players, weapon2, person2, room3);
+				if (tempSuggestion==weapon2 || tempSuggestion==person2){
+					num_c1++;
+				} else if (tempSuggestion==room3){
+					num_c2++;
+				} else {
+					fail("It returned a wrong card.");
+				}
+			}
+		}
+		assertTrue(num_c2>0 && num_c1>0);
+	}
 }

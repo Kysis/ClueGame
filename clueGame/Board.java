@@ -36,7 +36,7 @@ public class Board {
 		this.accusation = accusation;
 	}
 
-	public Player getComputer(int index){
+	public ComputerPlayer getComputer(int index){
 		return computers.get(index);
 	}
 	

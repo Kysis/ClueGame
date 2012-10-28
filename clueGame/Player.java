@@ -9,6 +9,10 @@ public class Player {
 	private int row, col;
 	private ArrayList<Card> cards;
 	
+	public Card disproveSuggestion(ArrayList<Player> players, Card weapon, Card person, Card room){
+		return room;
+	}
+	
 	public void makeAccusation(Card weapon, Card person, Card room){
 		
 	}
@@ -52,6 +56,4 @@ public class Player {
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
 	}
-
-	
 }
