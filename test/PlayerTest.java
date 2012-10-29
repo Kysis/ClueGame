@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import clueGame.BadConfigFormatException;
 import clueGame.Board;
 import clueGame.BoardCell;
 import clueGame.Card;
@@ -31,7 +32,7 @@ public class PlayerTest {
 	private static ArrayList<Card> answer;
 	
 	@BeforeClass
-	public static void setUp() {
+	public static void setUp() throws BadConfigFormatException {
 		board = new Board("Legend","BoardLayout.csv", "Cards", "Players");
 		weapon = new Card("Wrench", "weapon");
 		room = new Card("Holodeck", "room");
@@ -39,7 +40,7 @@ public class PlayerTest {
 		weapon2 = new Card("Gun", "weapon");
 		room2 = new Card("Galley", "room");
 		person2 = new Card("Colonel Mustard", "person");
-		weapon3 = new Card("Kinfe", "weapon");
+		weapon3 = new Card("Knife", "weapon");
 		room3 = new Card("Bedroom", "room");
 		person3 = new Card("Professor Plum", "person");
 		weapon4 = new Card("Bat", "weapon");

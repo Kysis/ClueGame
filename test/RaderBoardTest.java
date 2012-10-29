@@ -25,7 +25,7 @@ public class RaderBoardTest {
 	
 	@BeforeClass
 	public static void setUp() {
-		board = new Board("RaderLegend","RaderConfig");
+		board = new Board("RaderLegend","RaderConfig", "", "");
 	}
 	@Test
 	public void testRooms() {

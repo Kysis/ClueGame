@@ -5,8 +5,17 @@ public class Card {
 	private Type type;
 	public enum Type {PERSON, WEAPON, ROOM};
 	
-	public Card(String name, String cardType){
-		
+	public Card(String inputName, String cardType) throws BadConfigFormatException{
+		if(cardType.equalsIgnoreCase("person")) {
+			this.type = Type.PERSON;
+		} else if (cardType.equalsIgnoreCase("weapon")) {
+			this.type = Type.WEAPON;
+		} else if (cardType.equalsIgnoreCase("room")) {
+			this.type = type.ROOM;
+		} else {
+			throw new BadConfigFormatException("Incorrect type for card");
+		}
+		this.name = inputName;
 	}
 	
 	public String getName() {

@@ -14,7 +14,7 @@ public class RaderAdjTest {
 	private static Board board;
 	@BeforeClass
 	public static void setUp() {
-		board = new Board("RaderLegend","RaderConfig");
+		board = new Board("RaderLegend","RaderConfig", "", "");
 	}
 
 	// Ensure that player does not move around within room

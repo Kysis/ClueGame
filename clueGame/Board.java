@@ -13,7 +13,6 @@ import java.util.Set;
 import clueGame.RoomCell.DoorDirection;
 
 public class Board {
-	//Map<String,String> legendMap = new HashMap<String,String>();
 	private ArrayList<BoardCell> cells;
 	private Map<Character,String> rooms;
 	private int numRows;
@@ -55,16 +54,46 @@ public class Board {
 	public Board(String legendFile, String configFile, String playerFile, String cardFile) {
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
-		loadConfigFiles(legendFile,configFile);
+		deck = new ArrayList<Card>();
+		loadConfigFiles(legendFile,configFile,playerFile,cardFile);
 		gridPieces = numRows*numCols;
 		calcAdjacencies();
 	}
-	public void loadConfigFiles(String legendFile, String configFile) {
+	public void loadConfigFiles(String legendFile, String configFile, String playerFile, String cardFile) {
 		try{
 			loadLegend(legendFile);
 			loadBoard(configFile);
+			loadPlayers(playerFile);
+			loadCards(cardFile);
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void loadPlayers(String file) {
+		try {
+			FileReader reader = new FileReader(file);
+			Scanner scan = new Scanner(reader);
+		} catch (FileNotFoundException e) {
+			System.out.println("Player file not found");
+		}
+	}
+	
+	public void loadCards(String file) throws BadConfigFormatException {
+		try {
+			FileReader reader = new FileReader(file);
+			Scanner scan = new Scanner(reader);
+			while(scan.hasNext()) {
+				String cardLine = scan.nextLine();
+				String[] cardData = cardLine.split(",");
+				for(int i = 0; i < cardData.length; ++ i) {
+					System.out.println(cardData[i]);
+				}
+				Card temp = new Card(cardData[1], cardData[0]);
+				deck.add(temp);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Card file not found");
 		}
 	}
 	public void loadLegend(String file) throws BadConfigFormatException {
@@ -95,7 +124,6 @@ public class Board {
 				numCols = boardData.length;
 				int curCol = 0;
 				for(String s:boardData) {
-					//System.out.print(s+" ");
 					if(s.equalsIgnoreCase("W")) {
 						cells.add(new WalkwayCell(curRow,curCol));
 					} else {
@@ -103,19 +131,21 @@ public class Board {
 					}
 					curCol++;
 				}
-				//System.out.println("");
 				curRow++;
 			}
 			while(scan.hasNext()) {
 				String boardLine = scan.nextLine();
 				String[] boardData = boardLine.split(",");
-				
+				for(int i = 0; i < boardData.length; ++ i) {
+					if(boardData[i].length() > 2) {
+						throw new BadConfigFormatException("Problems with board read");
+					}
+				}
 				if(boardData.length!=numCols) {
 					throw new BadConfigFormatException("Inconsistent board length");
 				} else {
 					int curCol = 0;
 					for(String s:boardData) {
-						//System.out.print(s+" ");
 						if(s.equalsIgnoreCase("W")) {
 							cells.add(new WalkwayCell(curRow,curCol));
 						} else {
@@ -123,7 +153,6 @@ public class Board {
 						}
 						curCol++;
 					}
-					//System.out.println("");
 					curRow++;
 				}
 			}
@@ -248,36 +277,5 @@ public class Board {
 		return adjacencies.get(index);
 	}
 	
-	/*public void printCells() {
-		int cellCount=0;
-		for(BoardCell cell:cells) {
-			cell.draw();
-			if(cellCount==numCols-1) {
-				System.out.println();
-				cellCount=0;
-			} else {
-				cellCount++;
-			}			
-		}
-	}
-	public void printLegend() {
-		Set<Character> keys = rooms.keySet();
-		for(char c:keys) {
-			System.out.println(c+" "+rooms.get(c));
-		}
-	}
-	public void printTargets() {
-		for(BoardCell b:targets) {
-			System.out.println(calcIndex(b.row,b.col));
-		}
-	}
-	public static void main(String[] args) {
-		Board board = new Board("Legend","BoardLayout.csv");
-		for( int i: board.getAdjList(board.calcIndex(5, 1)) ) {
-			System.out.println(i);			
-		}		
-		//board.calcTargets(board.calcIndex(5, 2), 2);
-		//Set<BoardCell> targets= board.getTargets();
-		//board.printTargets();
-	}*/
+
 }

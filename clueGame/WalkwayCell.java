@@ -19,8 +19,8 @@ public class WalkwayCell extends BoardCell {
 		if(o==null) return false;
 		if(o==this) return true;
 		if(o instanceof WalkwayCell) {
-			WalkwayCell banana = (WalkwayCell)o;
-			if(banana.col==this.col && banana.row==this.row) {
+			WalkwayCell temp = (WalkwayCell)o;
+			if(temp.col==this.col && temp.row==this.row) {
 				return true;
 			}
 		}

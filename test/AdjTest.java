@@ -14,7 +14,7 @@ public class AdjTest {
 	private static Board board;
 	@BeforeClass
 	public static void setUp() {
-		board = new Board("Legend","BoardLayout.csv");
+		board = new Board("Legend","BoardLayout.csv", "", "");
 	}
 
 	// Ensure that player does not move around within room
