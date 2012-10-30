@@ -9,6 +9,13 @@ public class Player {
 	private int row, col;
 	private ArrayList<Card> cards;
 	
+	public Player(String n, String c, int r, int co) {
+		this.name = name;
+		this.row = r;
+		this.col = co;
+		this.color = c;
+	}
+	
 	public Card disproveSuggestion(ArrayList<Player> players, Card weapon, Card person, Card room){
 		return room;
 	}

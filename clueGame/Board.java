@@ -55,6 +55,7 @@ public class Board {
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();
 		deck = new ArrayList<Card>();
+		computers = new ArrayList<ComputerPlayer>();
 		loadConfigFiles(legendFile,configFile,playerFile,cardFile);
 		gridPieces = numRows*numCols;
 		calcAdjacencies();
@@ -70,10 +71,29 @@ public class Board {
 		}
 	}
 	
-	public void loadPlayers(String file) {
+	public void loadPlayers(String file) throws BadConfigFormatException {
 		try {
 			FileReader reader = new FileReader(file);
 			Scanner scan = new Scanner(reader);
+			String playerLine = scan.nextLine();
+			String[]playerData = playerLine.split(",");
+			if(playerData.length != 4) {
+				throw new BadConfigFormatException("Error in loading players");
+			}
+			int r = Integer.parseInt(playerData[2]);
+			int c = Integer.parseInt(playerData[3]);
+			human = new HumanPlayer(playerData[1], playerData[0], r, c);
+			while(scan.hasNext()) {
+				playerLine = scan.nextLine();
+				playerData = playerLine.split(",");
+				if(playerData.length != 4) {
+					throw new BadConfigFormatException("Error in loading players");
+				}
+				r = Integer.parseInt(playerData[2]);
+				c = Integer.parseInt(playerData[3]);
+				ComputerPlayer temp = new ComputerPlayer(playerData[1], playerData[0], r, c);
+				computers.add(temp);
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Player file not found");
 		}
@@ -86,9 +106,6 @@ public class Board {
 			while(scan.hasNext()) {
 				String cardLine = scan.nextLine();
 				String[] cardData = cardLine.split(",");
-				for(int i = 0; i < cardData.length; ++ i) {
-					System.out.println(cardData[i]);
-				}
 				Card temp = new Card(cardData[1], cardData[0]);
 				deck.add(temp);
 			}
