@@ -203,17 +203,19 @@ public class Board {
 		Collections.shuffle(deck);
 		boolean room = false;
 		boolean pers = false;
-		boolean weapon = true;
+		boolean weap = false;
 		for(int k = 0; k < deck.size(); ++ k) {
 			if((deck.get(k).getType() == Type.ROOM) && (room == false)) {
 				accusation.add(deck.get(k));
 				room = true;
-			} else if ((deck.get(k).getType() == Type.PERSON) && (pers == false)) {
+			}
+			if ((deck.get(k).getType() == Type.PERSON) && (pers == false)) {
 				accusation.add(deck.get(k));
 				pers = true;
-			} else if ((deck.get(k).getType() == Type.WEAPON) && (weapon == false)) {
+			}
+			if ((deck.get(k).getType() == Type.WEAPON) && (weap == false)) {
 				accusation.add(deck.get(k));
-				weapon = true;
+				weap = true;
 			}
 		}
 		int playNum = 0;

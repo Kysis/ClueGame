@@ -21,7 +21,6 @@ public class Player {
 	
 	public Card disproveSuggestion(ArrayList<Player> players, Card weapon, Card person, Card room){
 		Collections.shuffle(players);
-		System.out.println(players.get(0).getCards().size());
 		for(int i = 0; i < players.size(); ++ i) {
 			ArrayList<Card> temp = new ArrayList<Card>();
 			temp = players.get(i).getCards();

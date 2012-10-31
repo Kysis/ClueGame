@@ -11,7 +11,7 @@ public class Card {
 		} else if (cardType.equalsIgnoreCase("weapon")) {
 			this.type = Type.WEAPON;
 		} else if (cardType.equalsIgnoreCase("room")) {
-			this.type = type.ROOM;
+			this.type = Type.ROOM;
 		} else {
 			throw new BadConfigFormatException("Incorrect type for card");
 		}
