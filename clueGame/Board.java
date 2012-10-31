@@ -53,6 +53,15 @@ public class Board {
 		return deck;
 	}
 	
+	public ArrayList<Player> getPlayers() {
+		ArrayList<Player> players = new ArrayList<Player>();
+		players.add(human);
+		for(int i = 0; i < computers.size(); ++ i) {
+			players.add(computers.get(i));
+		}
+		return players;
+	}
+	
 	public Board(String legendFile, String configFile, String playerFile, String cardFile) {
 		cells = new ArrayList<BoardCell>();
 		rooms = new HashMap<Character,String>();

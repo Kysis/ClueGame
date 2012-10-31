@@ -1,7 +1,9 @@
 package clueGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Player {
 	private String name;
@@ -18,7 +20,22 @@ public class Player {
 	}
 	
 	public Card disproveSuggestion(ArrayList<Player> players, Card weapon, Card person, Card room){
-		return room;
+		Collections.shuffle(players);
+		System.out.println(players.get(0).getCards().size());
+		for(int i = 0; i < players.size(); ++ i) {
+			ArrayList<Card> temp = new ArrayList<Card>();
+			temp = players.get(i).getCards();
+			for(int j = 0; j < temp.size(); ++ j) {
+				if(temp.get(j).equals(weapon)) {
+					return weapon;
+				} else if(temp.get(j).equals(person)) {
+					return person;
+				} else if(temp.get(j).equals(room)) {
+					return room;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public void makeAccusation(Card weapon, Card person, Card room){

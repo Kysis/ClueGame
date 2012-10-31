@@ -33,7 +33,7 @@ public class PlayerTest {
 	
 	@BeforeClass
 	public static void setUp() throws BadConfigFormatException {
-		board = new Board("Legend","BoardLayout.csv", "Cards", "Players");
+		board = new Board("Legend","BoardLayout.csv", "players.txt", "cards.txt");
 		weapon = new Card("Wrench", "weapon");
 		room = new Card("Holodeck", "room");
 		person = new Card("Miss Scarlet", "person");
@@ -74,7 +74,7 @@ public class PlayerTest {
 	@Test
 	public void testLocationPick(){
 		//Check that they computer prefers a room
-		ComputerPlayer temp = new ComputerPlayer();
+		ComputerPlayer temp = new ComputerPlayer("Colonel Mustard", "Yellow", 0, 0);
 		for (int i=0; i<101; i++){
 			//Pick 100 different locations and assure they are all rooms
 			temp.pickLocation(board);
@@ -87,7 +87,7 @@ public class PlayerTest {
 	
 	@Test
 	public void testLocationPickRandomness(){
-		ComputerPlayer temp = new ComputerPlayer();
+		ComputerPlayer temp = new ComputerPlayer("Colonel Mustard", "Yellow", 38, 0);
 		board.calcTargets(board.calcIndex(38, 0), 3);
 		int loc38_3 = 0;
 		int loc39_2 = 0;
@@ -113,7 +113,7 @@ public class PlayerTest {
 	
 	@Test
 	public void testDisproveSuggestion(){
-		Player temp = new Player();
+		Player temp = new Player("Colonel Mustard", "Yellow", 0 , 0);
 		ArrayList<Card> hand = new ArrayList<Card> ();
 		hand.add(person);
 		hand.add(person2);
@@ -121,15 +121,15 @@ public class PlayerTest {
 		hand.add(weapon2);
 		hand.add(room);
 		hand.add(room2);
-		assertEquals(person, temp.disproveSuggestion(weapon3, person, room3));
-		assertEquals(weapon, temp.disproveSuggestion(weapon, person3, room3));
-		assertEquals(room, temp.disproveSuggestion(weapon3, person3, room));
-		assertEquals(null, temp.disproveSuggestion(weapon3, person3, room3));
+		assertEquals(person, temp.disproveSuggestion(board.getPlayers(), weapon3, person, room3));
+		assertEquals(weapon, temp.disproveSuggestion(board.getPlayers(), weapon, person3, room3));
+		assertEquals(room, temp.disproveSuggestion(board.getPlayers(), weapon3, person3, room));
+		assertEquals(null, temp.disproveSuggestion(board.getPlayers(), weapon3, person3, room3));
 	}
 	
 	@Test
 	public void testMultipleSuggestion(){
-		Player temp = new Player();
+		Player temp = new Player("Colonel Mustard", "Yellow", 0 , 0);
 		Card tempCard;
 		ArrayList<Card> hand = new ArrayList<Card> ();
 		//Set up the players
@@ -162,9 +162,9 @@ public class PlayerTest {
 	
 	@Test
 	public void testAllPlayersAsked(){
-		HumanPlayer temp = new HumanPlayer();
-		ComputerPlayer c1 = new ComputerPlayer();
-		ComputerPlayer c2 = new ComputerPlayer();
+		HumanPlayer temp = new HumanPlayer("Colonel Mustard", "Yellow", 0 , 0);
+		ComputerPlayer c1 = new ComputerPlayer("Colonel Mustard2", "Yellow", 0 , 0);
+		ComputerPlayer c2 = new ComputerPlayer("Colonel Mustard3", "Yellow", 0 , 0);
 		ArrayList<Player> players = new ArrayList<Player> ();
 		players.add(temp);
 		players.add(c1);
