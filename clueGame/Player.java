@@ -14,6 +14,7 @@ public class Player {
 		this.row = r;
 		this.col = co;
 		this.color = c;
+		cards = new ArrayList<Card>();
 	}
 	
 	public Card disproveSuggestion(ArrayList<Player> players, Card weapon, Card person, Card room){
@@ -62,5 +63,9 @@ public class Player {
 
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
+	}
+	
+	public void addCard(Card c) {
+		cards.add(c);
 	}
 }

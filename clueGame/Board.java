@@ -3,6 +3,7 @@ package clueGame;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import clueGame.Card.Type;
 import clueGame.RoomCell.DoorDirection;
 
 public class Board {
@@ -56,9 +58,11 @@ public class Board {
 		rooms = new HashMap<Character,String>();
 		deck = new ArrayList<Card>();
 		computers = new ArrayList<ComputerPlayer>();
+		accusation = new ArrayList<Card>();
 		loadConfigFiles(legendFile,configFile,playerFile,cardFile);
 		gridPieces = numRows*numCols;
 		calcAdjacencies();
+		dealCards();
 	}
 	public void loadConfigFiles(String legendFile, String configFile, String playerFile, String cardFile) {
 		try{
@@ -178,6 +182,43 @@ public class Board {
 			numRows = curRow;
 		} catch (FileNotFoundException e) {
 			System.out.println("Board file not found");
+		}
+	}
+	
+	public void dealCards() {
+		Player[] people = new Player[computers.size() + 1];
+		people[0] = human;
+		for(int j = 0; j < computers.size(); ++ j) {
+			people[j + 1] = computers.get(j);
+		}
+		Collections.shuffle(deck);
+		boolean room = false;
+		boolean pers = false;
+		boolean weapon = true;
+		for(int k = 0; k < deck.size(); ++ k) {
+			if((deck.get(k).getType() == Type.ROOM) && (room == false)) {
+				accusation.add(deck.get(k));
+				room = true;
+			} else if ((deck.get(k).getType() == Type.PERSON) && (pers == false)) {
+				accusation.add(deck.get(k));
+				pers = true;
+			} else if ((deck.get(k).getType() == Type.WEAPON) && (weapon == false)) {
+				accusation.add(deck.get(k));
+				weapon = true;
+			}
+		}
+		int playNum = 0;
+		for(int i = 0; i < deck.size(); ++ i) {
+			for(int l = 0; l < accusation.size(); ++ l) {
+				if(deck.get(i).equals(accusation.get(l))) {
+					++ i;
+				}
+			}
+			people[playNum].addCard(deck.get(i));
+			++ playNum;
+			if(playNum > people.length - 1) {
+				playNum = 0;
+			}
 		}
 	}
 	
