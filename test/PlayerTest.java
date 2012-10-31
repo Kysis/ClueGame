@@ -66,19 +66,19 @@ public class PlayerTest {
 	public void testAccusation(){
 		//Check a correct accusation
 		board.getHuman().makeAccusation(weaponAns, personAns, roomAns);
-		assertTrue(answer.containsAll(board.getAccusation()));
+		assertTrue(board.getHuman().getAccusation().containsAll(board.getAccusation()));
 		//Check a wrong weapon
 		board.getHuman().makeAccusation(weapon2, personAns, roomAns);
-		assertFalse(answer.containsAll(board.getAccusation()));
+		assertFalse(board.getHuman().getAccusation().containsAll(board.getAccusation()));
 		//Check a wrong person
 		board.getHuman().makeAccusation(weaponAns, person2, roomAns);
-		assertFalse(answer.containsAll(board.getAccusation()));
+		assertFalse(board.getHuman().getAccusation().containsAll(board.getAccusation()));
 		//Check a wrong room
 		board.getHuman().makeAccusation(weaponAns, personAns, room2);
-		assertFalse(answer.containsAll(board.getAccusation()));
+		assertFalse(board.getHuman().getAccusation().containsAll(board.getAccusation()));
 		//Check when all 3 are wrong
 		board.getHuman().makeAccusation(weapon2, person2, room2);
-		assertFalse(answer.containsAll(board.getAccusation()));
+		assertFalse(board.getHuman().getAccusation().containsAll(board.getAccusation()));
 	}
 	
 	@Test

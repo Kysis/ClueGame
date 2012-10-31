@@ -10,6 +10,7 @@ public class Player {
 	private String color;
 	private int row, col;
 	private ArrayList<Card> cards;
+	private ArrayList<Card> accuse;
 	
 	public Player(String n, String c, int r, int co) {
 		this.name = name;
@@ -17,6 +18,7 @@ public class Player {
 		this.col = co;
 		this.color = c;
 		cards = new ArrayList<Card>();
+		accuse = new ArrayList<Card>();
 	}
 	
 	public Card disproveSuggestion(ArrayList<Player> players, Card weapon, Card person, Card room){
@@ -38,7 +40,10 @@ public class Player {
 	}
 	
 	public void makeAccusation(Card weapon, Card person, Card room){
-		
+		accuse = new ArrayList<Card>();
+		accuse.add(weapon);
+		accuse.add(person);
+		accuse.add(room);
 	}
 	
 	public String getName() {
@@ -83,5 +88,9 @@ public class Player {
 	
 	public void addCard(Card c) {
 		cards.add(c);
+	}
+	
+	public ArrayList<Card> getAccusation() {
+		return accuse;
 	}
 }
